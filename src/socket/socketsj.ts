@@ -1,4 +1,4 @@
-
+import { Request, Response } from 'express';
 
 const webSocket = require("ws");
 const SocketServer = require("ws").Server;
