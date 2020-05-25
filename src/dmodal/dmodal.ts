@@ -67,11 +67,11 @@ export const transaction = async(playerId:number, time:timeType, amount:number, 
 		
 
 					
-					const insertTransactionQuery = 'INSERT INTO transaction(timeCreated, playerId, transactionAmount, newWalletAmount) VALUES ($1, $2, $3, $4) RETURNING id';
+					const insertTransactionQuery = 'INSERT INTO transaction(time, playerId, transactionAmount, newWalletAmount) VALUES ($1, $2, $3, $4) RETURNING id';
 					const TransactionQueryResultId = await client.query(insertTransactionQuery, [time, playerId, amount, newWalletAmount]);		
 	
 				
-					const insertTransactionType = 'INSERT INTO transactionType (transactionId, timeCreated, type) VALUES ($1, $2, $3)';
+					const insertTransactionType = 'INSERT INTO transactionType (transactionId, time, type) VALUES ($1, $2, $3)';
 					const insertTransactionTypeResult = await client.query(insertTransactionType, [TransactionQueryResultId.rows[0].id, time, type]);
 
 					const updatingplayerWallet = 'UPDATE Wallet SET balance = $1 WHERE playerId = $2'
