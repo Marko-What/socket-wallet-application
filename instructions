@@ -1,0 +1,65 @@
+instructions
+
+insert following commands inside terminal to create postgres database and tables
+
+
+
+sudo -u postgres psql 
+CREATE DATABASE walletdb;
+
+\c walletdb --- switch to newly created database
+
+CREATE TABLE Wallet (
+    id SERIAL PRIMARY KEY,
+    playerId INT,
+    datetime date,   
+    balance INT
+);
+
+CREATE TABLE transaction (
+    id SERIAL PRIMARY KEY,
+    playerId INT,
+    time date,  
+    transactionAmount INT, 
+    newWalletAmount INT
+);
+
+
+CREATE TABLE transactionType  (
+      id SERIAL PRIMARY KEY,
+      type VARCHAR(24),
+      time date,
+      transactionId INT
+);
+
+
+
+\dt  --- check out if tables exist inside a database
+
+postman application data
+do not forget to setup an http header
+content-type: application/json
+
+for creating wallet execute post request to a /wallet resource with the following data
+{ "playerId":19, "datetime":"2020-5-21", "amount":444 }
+
+for creating deposit/withdraw execute post request to a /deposit, /withdraw resource with the following data
+{ "playerId":19, "time":"2020-5-21", "amount":444 }
+
+
+works only on application version with sockets
+
+run the Smart Websocket Client chrome extension 
+pass the url:
+     
+    ws://localhost:8080/ws
+
+socket data
+
+    creating new wallet
+    {"playerId":19, "datetime":"2020-5-21", "amount":300, "type":"start deposit" } 
+    
+     deposit/withdraw
+    {"playerId":19, "time":"2020-5-21", "amount":300, "type":"deposit" }     
+
+
